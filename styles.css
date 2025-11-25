@@ -120,6 +120,29 @@ body.weather-rain::before {
     color: #d9e6d6;
 }
 
+/* FLORA SECTION */
+.flora {
+    max-width: 900px;
+    margin: auto;
+    background: rgba(15, 20, 15, 0.5);
+    padding: 40px;
+    border-radius: 16px;
+    backdrop-filter: blur(4px);
+    box-shadow: 0 0 20px rgba(0,0,0,0.4);
+}
+
+.flora h1 {
+    font-size: 46px;
+    color: #a8db99;
+    margin-bottom: 20px;
+}
+
+.flora p {
+    font-size: 20px;
+    line-height: 1.7;
+    color: #d9e6d6;
+}
+
 /* TREE LIST */
 .tree-list {
     display: grid;
