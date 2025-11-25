@@ -152,14 +152,14 @@
     </script>
     <script>
         const readButtons = document.querySelectorAll(".read-more");
-        
+
         readButtons.forEach(button => {
             button.addEventListener("click", (e) => {
-                e.stopPropagation(); // prevent triggering parent click
+                e.stopPropagation(); // don't trigger any parent click
                 const section = button.closest(".section-block");
                 section.classList.toggle("expanded");
-                
-                // Optional: change button text
+
+                // Change button text
                 if(section.classList.contains("expanded")) {
                     button.textContent = "Read Less";
                 } else {
@@ -167,6 +167,6 @@
                 }
             });
         });
-        </script>
+    </script>
 </body>
 </html>
