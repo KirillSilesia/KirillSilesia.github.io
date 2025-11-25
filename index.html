@@ -1,0 +1,372 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Leafora — Trees of the Białowieża Forest</title>
+  <meta name="description" content="Leafora — an educational site about tree species in the Białowieża Forest (Puszcza Białowieska). Photos, pronunciation links, origins and links to Wikipedia." />
+  <meta name="keywords" content="Białowieża, Puszcza Białowieska, trees, oak, spruce, hornbeam, linden, pine, birch, Leafora" />
+  <meta name="author" content="Your Name" />
+  <link rel="icon" href="data:;base64,iVBORw0KGgo=" />
+  <style>
+    /* BASIC RESET */
+    *{box-sizing:border-box;margin:0;padding:0}
+    html,body,#app{height:100%}
+    body{font-family:Inter,system-ui,Segoe UI,Roboto,"Helvetica Neue",Arial;line-height:1.45;color:#1b1b1b}
+
+    /* LAYOUT */
+    header{backdrop-filter: blur(6px);position:fixed;left:0;right:0;top:0;height:64px;display:flex;align-items:center;gap:18px;padding:0 20px;z-index:20}
+    header .brand{font-weight:700;font-size:20px;color:#fff}
+    header .nav{margin-left:auto;display:flex;gap:12px}
+    header a{color:#fff;text-decoration:none;padding:8px 12px;border-radius:8px}
+    header a:hover{background:rgba(255,255,255,0.08)}
+
+    main{padding-top:90px;min-height:100%;position:relative;z-index:10}
+    .container{max-width:980px;margin:0 auto;padding:28px}
+
+    /* HERO */
+    .hero{display:flex;gap:28px;align-items:center;margin-bottom:18px;padding:28px;border-radius:14px;background:linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));box-shadow:0 6px 30px rgba(5,10,10,0.25)}
+    .hero h1{font-size:32px;color:#fff}
+    .hero p{color:rgba(255,255,255,0.9);max-width:700px}
+
+    /* CONTENT */
+    .card{background:rgba(255,255,255,0.02);border-radius:12px;padding:14px;margin-bottom:14px;transition:all 220ms ease;overflow:hidden}
+    .card:hover{transform:translateY(-6px);box-shadow:0 20px 40px rgba(2,6,6,0.5)}
+    .article-row{display:flex;gap:18px;align-items:center}
+    .article-row img{width:160px;height:100px;object-fit:cover;border-radius:8px}
+    .article-row .meta{flex:1}
+    .title{font-size:18px;font-weight:700;color:#fff}
+    .excerpt{color:rgba(255,255,255,0.9);margin-top:8px}
+    .read-more{margin-top:12px;display:inline-block;padding:8px 12px;border-radius:8px;background:rgba(255,255,255,0.06);color:#fff;text-decoration:none}
+
+    /* TREE LIST */
+    .searchbar{display:flex;gap:10px;margin:18px 0}
+    .searchbar input{flex:1;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.06);background:transparent;color:#fff}
+
+    .tree-item{display:flex;gap:14px;align-items:center;padding:12px;border-radius:10px;background:rgba(255,255,255,0.02);transition:all 180ms}
+    .tree-item:hover{transform:scale(1.02);background:rgba(255,255,255,0.03)}
+    .tree-item img{width:110px;height:80px;object-fit:cover;border-radius:8px}
+    .tree-item .right{flex:1}
+    .tree-item h3{color:#fff}
+    .tree-item p{color:rgba(255,255,255,0.85)}
+
+    /* DEDICATED PAGE */
+    .tree-page{padding:18px;background:rgba(255,255,255,0.02);border-radius:12px}
+    .tree-hero{display:flex;gap:18px;align-items:flex-start}
+    .tree-hero img{width:260px;height:180px;object-fit:cover;border-radius:10px}
+    .tree-hero .info h2{color:#fff}
+    .links{margin-top:12px}
+    .links a{display:inline-block;margin-right:8px;padding:6px 10px;border-radius:8px;background:rgba(255,255,255,0.04);text-decoration:none;color:#fff}
+
+    /* footer */
+    footer{padding:18px;color:rgba(255,255,255,0.85);text-align:center}
+
+    /* BACKGROUND canvas overlay (weather) */
+    #bg-canvas{position:fixed;left:0;top:0;width:100%;height:100%;z-index:0;pointer-events:none}
+    .bg-layer{position:fixed;inset:0;z-index: -1}
+
+    /* DARK THEME from forest palette */
+    body{background:linear-gradient(180deg,#0b1220 0%, #0f1720 60%)}
+
+    /* small responsive */
+    @media(max-width:700px){.hero{flex-direction:column}.tree-hero{flex-direction:column}.article-row img{width:120px;height:90px}}
+  </style>
+</head>
+<body>
+  <div id="app">
+    <canvas id="bg-canvas"></canvas>
+    <header>
+      <div class="brand">Leafora</div>
+      <nav class="nav">
+        <a href="#/" data-link>Home</a>
+        <a href="#/trees" data-link>Trees</a>
+        <a href="#/about" data-link>About</a>
+      </nav>
+    </header>
+
+    <main>
+      <div class="container" id="view">
+        <!-- Views injected by JS -->
+      </div>
+    </main>
+
+    <footer>Made with 🌿 for the Leafora university project — images are credited to Wikimedia Commons when used.</footer>
+  </div>
+
+  <script>
+    /* ---------- DATA: list of trees ---------- */
+    const TREES = [
+      {
+        id:'quercus-robur',
+        common:'Pedunculate oak',
+        polish:'Dąb szypułkowy',
+        scientific:'Quercus robur',
+        cambridge:'https://dictionary.cambridge.org/dictionary/english/oak',
+        wiki:'https://en.wikipedia.org/wiki/Quercus_robur',
+        img:'https://upload.wikimedia.org/wikipedia/commons/6/6b/Quercus_robur_%28Oak%29.jpg',
+        excerpt:'A long-lived native oak species often found in Białowieża — a keystone tree for many species.'
+      },
+      {
+        id:'picea-abies',
+        common:'Norway spruce',
+        polish:'Świerk pospolity',
+        scientific:'Picea abies',
+        cambridge:'https://dictionary.cambridge.org/dictionary/english/spruce',
+        wiki:'https://en.wikipedia.org/wiki/Picea_abies',
+        img:'https://upload.wikimedia.org/wikipedia/commons/1/10/Picea_abies_01.jpg',
+        excerpt:'A tall conifer common in European forests including Białowieża.'
+      },
+      {
+        id:'carpinus-betulus',
+        common:'European hornbeam',
+        polish:'Grab pospolity',
+        scientific:'Carpinus betulus',
+        cambridge:'https://dictionary.cambridge.org/dictionary/english/hornbeam',
+        wiki:'https://en.wikipedia.org/wiki/Carpinus_betulus',
+        img:'https://upload.wikimedia.org/wikipedia/commons/5/58/Carpinus_betulus_leaves.jpg',
+        excerpt:'A hardwood often forming dense stands in mixed forests.'
+      },
+      {
+        id:'tilia',
+        common:'European linden',
+        polish:'Lipa',
+        scientific:'Tilia spp.',
+        cambridge:'https://dictionary.cambridge.org/dictionary/english/lime_tree',
+        wiki:'https://en.wikipedia.org/wiki/Tilia',
+        img:'https://upload.wikimedia.org/wikipedia/commons/0/0f/Tilia_platyphyllos_1.jpg',
+        excerpt:'Lindens are important for pollinators and commonly planted near villages.'
+      },
+      {
+        id:'betula-pendula',
+        common:'Silver birch',
+        polish:'Brzoza brodawkowata',
+        scientific:'Betula pendula',
+        cambridge:'https://dictionary.cambridge.org/dictionary/english/birch',
+        wiki:'https://en.wikipedia.org/wiki/Betula_pendula',
+        img:'https://upload.wikimedia.org/wikipedia/commons/3/3b/Betula_pendula_1.jpg',
+        excerpt:'A pioneer species with striking white bark often seen in clearings.'
+      },
+      {
+        id:'pinus-sylvestris',
+        common:'Scots pine',
+        polish:'Sosna zwyczajna',
+        scientific:'Pinus sylvestris',
+        cambridge:'https://dictionary.cambridge.org/dictionary/english/pine',
+        wiki:'https://en.wikipedia.org/wiki/Pinus_sylvestris',
+        img:'https://upload.wikimedia.org/wikipedia/commons/6/6f/Pinus_sylvestris.jpg',
+        excerpt:'Pine is a common conifer that tolerates poor soils and fire.'
+      }
+    ];
+
+    /* ---------- SIMPLE ROUTER ---------- */
+    function navigate(){
+      const view = document.getElementById('view');
+      const hash = location.hash || '#/';
+      if(hash === '#/' || hash === '#') return renderHome(view);
+      if(hash.startsWith('#/trees')) return renderTrees(view);
+      if(hash.startsWith('#/tree/')) return renderTree(view, hash.split('/').pop());
+      if(hash === '#/about') return renderAbout(view);
+      renderNotFound(view);
+    }
+
+    /* ---------- RENDERERS ---------- */
+    function renderHome(el){
+      el.innerHTML = `
+        <section class="hero card" style="background:linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01))">
+          <div>
+            <h1>Leafora — Trees of the Białowieża Forest</h1>
+            <p>Welcome to Leafora. This short project explores the tree species found in the Białowieża Forest (Puszcza Białowieska), one of Europe\'s last primeval forests. Browse the collection of species, see photos and follow pronunciation/etymology links.</p>
+          </div>
+        </section>
+
+        <section class="card">
+          <div class="article-row">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/1/1d/Bialowieza_Nature_Reserve_Panorama.jpg" alt="Białowieża Forest panorama">
+            <div class="meta">
+              <div class="title">About the Białowieża Forest</div>
+              <div class="excerpt">Białowieża is a transboundary forest on the Poland–Belarus border, home to a wide variety of tree species and the last lowland primeval forest in Europe. It contains old-growth stands, veteran oaks and diverse habitats. Explore the species list to learn more.</div>
+              <div style="margin-top:12px"><a class="read-more" href="#/trees">Explore trees</a></div>
+            </div>
+          </div>
+        </section>
+      `;
+    }
+
+    function renderTrees(el){
+      el.innerHTML = `
+        <section class="card">
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <h2 style="color:#fff">Tree collection</h2>
+            <div style="color:rgba(255,255,255,0.75)">Showing ${TREES.length} species</div>
+          </div>
+
+          <div class="searchbar">
+            <input id="searchInput" placeholder="Search species, common or scientific name..." />
+          </div>
+
+          <div id="treeList" style="display:flex;flex-direction:column;gap:12px"></div>
+        </section>
+      `;
+
+      const list = document.getElementById('treeList');
+      function showItems(filter=''){
+        const q = filter.trim().toLowerCase();
+        list.innerHTML = TREES.filter(t=>{
+          return !q || (t.common+t.scientific+t.polish).toLowerCase().includes(q);
+        }).map(t=>{
+          return `
+            <div class="tree-item" data-id="${t.id}">
+              <img src="${t.img}" alt="${t.common}">
+              <div class="right">
+                <h3>${t.common} — <small style="opacity:.85">${t.scientific}</small></h3>
+                <p style="margin-top:6px">${t.excerpt}</p>
+                <div style="margin-top:8px">
+                  <a class="read-more" href="#/tree/${t.id}">Read more</a>
+                  <a class="read-more" href="${t.cambridge}" target="_blank" rel="noopener">Pronunciation</a>
+                </div>
+              </div>
+            </div>
+          `;
+        }).join('');
+
+        // attach hover expansion using small JS after inserted
+        document.querySelectorAll('.tree-item').forEach(it=>{
+          it.addEventListener('mouseenter',()=>{it.style.transform='scale(1.02)';});
+          it.addEventListener('mouseleave',()=>{it.style.transform='scale(1)';});
+          it.querySelector('.read-more')?.addEventListener('click',()=>{});
+        });
+      }
+
+      showItems('');
+      document.getElementById('searchInput').addEventListener('input',e=>showItems(e.target.value));
+    }
+
+    function renderTree(el, id){
+      const tree = TREES.find(t=>t.id===id);
+      if(!tree) return renderNotFound(el);
+      el.innerHTML = `
+        <section class="tree-page card">
+          <div class="tree-hero">
+            <img src="${tree.img}" alt="${tree.common}">
+            <div class="info">
+              <h2>${tree.common} <small style="opacity:.9">${tree.scientific}</small></h2>
+              <p style="margin-top:8px">${tree.excerpt} Here you will find pronunciation, word origin and a short description.</p>
+
+              <div class="links">
+                <a href="${tree.cambridge}" target="_blank" rel="noopener">Cambridge Dictionary</a>
+                <a href="${tree.wiki}" target="_blank" rel="noopener">Wikipedia</a>
+              </div>
+            </div>
+          </div>
+
+          <article style="margin-top:14px">
+            <h3>About</h3>
+            <p>The ${tree.common} (${tree.scientific}) appears in Białowieża. This short article is placeholder text — replace with your research: habitat, typical height, ecological role, conservation status and human uses.</p>
+
+            <h4 style="margin-top:12px">Pronunciation & Etymology</h4>
+            <p>Click the Cambridge Dictionary link above to hear pronunciation and find word origin and phonetics.</p>
+
+            <p style="margin-top:14px">For more scientific details, follow the link to the Wikipedia page at the top-right.</p>
+          </article>
+        </section>
+      `;
+    }
+
+    function renderAbout(el){
+      el.innerHTML = `
+        <section class="card">
+          <h2 style="color:#fff">About Leafora</h2>
+          <p style="margin-top:8px">Leafora is a student project which demonstrates a searchable, responsive website about the trees of the Białowieża Forest. The site is SEO-ready, accessible and easy to host on GitHub Pages or Netlify. Replace image URLs and article bodies with your own content and cite sources.</p>
+        </section>
+      `;
+    }
+
+    function renderNotFound(el){
+      el.innerHTML = `<section class="card"><h2 style="color:#fff">Page not found</h2><p style="margin-top:8px">Sorry, that page doesn't exist.</p></section>`;
+    }
+
+    /* ---------- INIT ---------- */
+    window.addEventListener('hashchange',navigate);
+    window.addEventListener('load',()=>{navigate(); initHeaderLinks(); initWeatherBackground();});
+
+    function initHeaderLinks(){
+      document.querySelectorAll('a[data-link]').forEach(a=>a.addEventListener('click',()=>{}));
+    }
+
+    /* ---------- WEATHER BACKGROUND ---------- */
+    // This feature requires an API key from OpenWeatherMap (free tier). Add your key into the variable below.
+    // Get key: https://openweathermap.org/api
+    const OPENWEATHER_API_KEY = 'PUT_YOUR_OPENWEATHER_KEY_HERE';
+
+    async function initWeatherBackground(){
+      const canvas = document.getElementById('bg-canvas');
+      const ctx = canvas.getContext('2d');
+      function resize(){canvas.width = innerWidth; canvas.height = innerHeight}
+      addEventListener('resize',resize); resize();
+
+      // helper: draw simple overlay for sun/clouds/rain/snow
+      function clear(){ctx.clearRect(0,0,canvas.width,canvas.height)}
+
+      // small particle systems
+      const particles = [];
+      function spawnRain(){for(let i=0;i<120;i++){particles.push({x:Math.random()*canvas.width,y:Math.random()*canvas.height,vy:4+Math.random()*6,len:8+Math.random()*6})}};
+      function spawnSnow(){for(let i=0;i<120;i++){particles.push({x:Math.random()*canvas.width,y:Math.random()*canvas.height,vy:0.4+Math.random()*1.2,r:1+Math.random()*2})})};
+
+      function renderRain(){clear();ctx.globalAlpha=0.7;ctx.strokeStyle='rgba(200,220,255,0.6)';for(let p of particles){ctx.beginPath();ctx.moveTo(p.x,p.y);ctx.lineTo(p.x,p.y+p.len);ctx.stroke();p.y+=p.vy;if(p.y>canvas.height){p.y=-10;p.x=Math.random()*canvas.width}}}
+      function renderSnow(){clear();ctx.globalAlpha=0.9;for(let p of particles){ctx.beginPath();ctx.fillStyle='rgba(255,255,255,0.9)';ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fill();p.y+=p.vy; if(p.y>canvas.height){p.y=-10;p.x=Math.random()*canvas.width}}}
+      function renderClear(){clear();/* light overlay to brighten page on sunny days */ ctx.fillStyle='rgba(255,255,200,0.02)';ctx.fillRect(0,0,canvas.width,canvas.height)}
+
+      // detect location via browser (permission request) and then fetch weather
+      try{
+        if(!OPENWEATHER_API_KEY || OPENWEATHER_API_KEY.includes('PUT_YOUR')){
+          // no key -> fade overlay only
+          renderClear(); return;
+        }
+
+        navigator.geolocation.getCurrentPosition(async pos=>{
+          const lat=pos.coords.latitude; const lon=pos.coords.longitude;
+          try{
+            const resp = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${OPENWEATHER_API_KEY}&units=metric`);
+            const data = await resp.json();
+            const weather = (data.weather && data.weather[0] && data.weather[0].main) ? data.weather[0].main.toLowerCase() : 'clear';
+
+            particles.length = 0; // reset
+            if(weather.includes('rain') || weather.includes('drizzle')){
+              // spawn rain
+              for(let i=0;i<180;i++){particles.push({x:Math.random()*canvas.width,y:Math.random()*canvas.height,vy:4+Math.random()*6,len:8+Math.random()*6});}
+              (function loop(){renderRain();requestAnimationFrame(loop)})();
+            } else if(weather.includes('snow')){
+              for(let i=0;i<180;i++){particles.push({x:Math.random()*canvas.width,y:Math.random()*canvas.height,vy:0.3+Math.random()*1.1,r:1+Math.random()*2});}
+              (function loop(){renderSnow();requestAnimationFrame(loop)})();
+            } else if(weather.includes('cloud')){
+              // subtle cloud overlay
+              ctx.fillStyle='rgba(20,30,40,0.25)';ctx.fillRect(0,0,canvas.width,canvas.height);
+            } else {
+              renderClear();
+            }
+          }catch(e){console.warn('weather fetch failed',e); renderClear();}
+        },err=>{console.warn('geolocation denied or failed',err); renderClear()});
+      }catch(e){console.warn('weather init failed',e); renderClear();}
+    }
+
+    /* ---------- Accessibility: simple keyboard shortcut to focus search ---------- */
+    document.addEventListener('keydown',e=>{if(e.key==='/' && document.activeElement.tagName!=='INPUT'){e.preventDefault(); const input = document.getElementById('searchInput'); if(input) input.focus();}});
+  </script>
+
+  <!-- Deployment and usage notes (visible to developer when editing the file) -->
+  <!--
+    LEAFORA single-file SPA
+    - Save this file as index.html
+    - Replace OPENWEATHER_API_KEY value with your OpenWeatherMap API key to enable weather background effects
+    - Images are linked from Wikimedia Commons; replace with your own hosted images if you prefer
+    - To deploy on GitHub Pages:
+        1) Create a GitHub repo (public) named leafora or leafora-site
+        2) Push this index.html to the repository's main branch
+        3) Enable Pages in Settings → Pages → Deploy from main
+    - To make site more discoverable in Google:
+        * Create a sitemap.xml and upload to repo
+        * Register site in Google Search Console
+        * Add structured data (JSON-LD) if required by your professor
+  -->
+</body>
+</html>
