@@ -22,22 +22,42 @@
         <div class="section-block hero">
             <h1>Białowieża Forest</h1>
             <p>Białowieża Forest, straddling Poland and Belarus, is one of Europe’s last and largest primeval forests, home to ancient trees and diverse wildlife.</p>
+            <div class="full-content">
+                <p>Białowieża Forest is a unique natural treasure, covering roughly 1,500 square kilometers across Poland and Belarus. Unlike most European forests, it has remained largely untouched by industrial development, allowing ecosystems to thrive in their natural state for centuries. The forest is famous for its massive, centuries-old oak and hornbeam trees, some reaching heights of over 40 meters and ages of 500 years or more. It serves as a living laboratory for ecologists and conservationists studying biodiversity, natural succession, and climate resilience. Historically, Białowieża was a royal hunting ground for Polish kings and later Russian tsars, which helped preserve its integrity. Today, the forest attracts tourists, researchers, and nature enthusiasts from around the world who come to explore its trails, observe wildlife, and experience a landscape that predates modern Europe. Its combination of natural beauty, ecological importance, and cultural history makes it a symbol of Europe’s environmental heritage.</p>
+            </div>
+            <button class="read-more">Read More</button>
         </div>
         <div class="section-block flora">
             <h1>Flora and Fauna</h1>
             <p>Białowieża Forest hosts a rich tapestry of life, from towering trees to rare mammals, birds, and plants, making it a hotspot of European biodiversity.</p>
+            <div class="full-content">
+                <p>The flora of Białowieża Forest is incredibly diverse, with over 1,000 plant species recorded, including ancient oaks, hornbeams, and spruces. Mosses, lichens, and fungi thrive on the forest floor, contributing to the ecosystem’s complexity. The forest’s wildlife is equally remarkable: it is home to Europe’s largest population of wild European bison, along with red deer, wild boar, lynx, wolves, and over 250 species of birds. Many species here are rare or endangered, making the forest crucial for conservation. Seasonal changes reveal new aspects of the ecosystem, from spring blossoms to autumn leaf carpets. Streams and marshes provide habitats for amphibians and insects, maintaining ecological balance. The interplay between predator and prey, along with decomposing trees, ensures that Białowieża remains a self-sustaining ecosystem, one of the last of its kind in Europe. Its biodiversity is a testament to the forest’s long history of minimal human interference and careful protection.</p>
+            </div>
+            <button class="read-more">Read More</button>
         </div>
         <div class="section-block zubr">
             <h1>European Bison</h1>
             <p>The European bison, or żubr, is the iconic species of Białowieża Forest, symbolizing successful conservation efforts in Europe.</p>
+            <div class="full-content">
+                <p>The European bison, the largest land mammal in Europe, is synonymous with Białowieża Forest. Once hunted to near extinction, these majestic creatures have been successfully reintroduced thanks to international conservation programs. Today, over 800 bison roam free in Białowieża and surrounding regions. Adult males can weigh up to 900 kilograms, and their impressive size and strength make them a highlight for visitors. Bison are herbivores, feeding on grasses, leaves, and bark, and they play a key ecological role by shaping the forest undergrowth and promoting plant diversity. The forest hosts a bison reserve where visitors can learn about breeding programs and observe these animals up close. Protecting the European bison has broader implications for forest preservation, as maintaining their habitat also safeguards countless other species, making the bison a living ambassador for European wildlife conservation.</p>
+            </div>
+            <button class="read-more">Read More</button>
         </div>
         <div class="section-block heritage">
             <h1>Unesco world heritage status</h1>
             <p>Białowieża Forest’s global significance was recognized in 1979 when it was designated a UNESCO World Heritage Site for its untouched primeval ecosystem.</p>
+            <div class="full-content">
+                <p>In 1979, UNESCO declared Białowieża Forest a World Heritage Site, highlighting its value as one of the last remaining primeval forests in Europe. The designation recognizes the forest’s ancient trees, biodiversity, and ecological processes, which have remained largely undisturbed for centuries. It also underscores the forest’s importance for scientific research, as it provides a reference point for understanding Europe’s natural history. Despite its protected status, Białowieża has faced challenges such as logging, disease, and debates over human intervention in natural processes. The UNESCO designation helps coordinate international efforts to preserve the forest, ensuring that logging practices are limited, research is supported, and endangered species are protected. Today, the World Heritage status not only raises global awareness but also provides legal and moral leverage for conservationists seeking to maintain Białowieża’s integrity for future generations.</p>
+            </div>
+            <button class="read-more">Read More</button>
         </div>
         <div class="section-block culture">
             <h1>Cultural significance</h1>
             <p>Białowieża Forest is deeply embedded in local culture and folklore, inspiring legends, art, and traditions for centuries.</p>
+            <div class="full-content">
+                <p>Białowieża Forest is more than a natural wonder; it is a cultural symbol intertwined with the history and identity of the region. For centuries, it served as a royal hunting ground, influencing local traditions and social structures. Folklore and legends abound, with tales of mystical creatures and spirits inhabiting the ancient woods. Artists, writers, and photographers have long drawn inspiration from the forest’s wild beauty, creating works that celebrate its majesty and mystery. Local communities continue to hold festivals and rituals that honor the forest, blending ecological awareness with cultural heritage. In addition, the forest’s stories and symbolism have become a tool for environmental education, fostering a connection between people and nature. Białowieża’s cultural significance thus complements its ecological value, making it both a living museum of biodiversity and a repository of human imagination and tradition.</p>
+            </div>
+            <button class="read-more">Read More</button>
         </div>
     </section>
 
@@ -130,5 +150,23 @@
 
         applyWeatherBackground();
     </script>
+    <script>
+        const readButtons = document.querySelectorAll(".read-more");
+        
+        readButtons.forEach(button => {
+            button.addEventListener("click", (e) => {
+                e.stopPropagation(); // prevent triggering parent click
+                const section = button.closest(".section-block");
+                section.classList.toggle("expanded");
+                
+                // Optional: change button text
+                if(section.classList.contains("expanded")) {
+                    button.textContent = "Read Less";
+                } else {
+                    button.textContent = "Read More";
+                }
+            });
+        });
+        </script>
 </body>
 </html>
