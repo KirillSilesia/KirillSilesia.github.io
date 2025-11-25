@@ -1,0 +1,210 @@
+/* Dark Forest Theme CSS for Leafora */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
+}
+
+body {
+    background: #0e0f0f;
+    color: #e2e8df;
+    min-height: 100vh;
+    transition: background 1.5s linear;
+    overflow-x: hidden;
+}
+
+/* Weather Backgrounds */
+body.weather-sunny {
+    background: linear-gradient(180deg, #1a331d, #0c0f0c);
+}
+
+body.weather-cloudy {
+    background: linear-gradient(180deg, #2f3b35, #111311);
+    filter: brightness(0.9);
+}
+
+body.weather-rain {
+    background: linear-gradient(180deg, #1c2422, #090b0a);
+}
+
+/* Rain effect (only visible when rainy) */
+body.weather-rain::before {
+    content: "";
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    pointer-events: none;
+    background-image: url('https://i.imgur.com/NM5Y7UO.png');
+    opacity: 0.25;
+    animation: rainMove 0.4s linear infinite;
+}
+
+@keyframes rainMove {
+    from { background-position: 0 0; }
+    to { background-position: 10% 100%; }
+}
+
+/* NAVIGATION */
+.navbar {
+    width: 100%;
+    padding: 20px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(10, 12, 10, 0.55);
+    backdrop-filter: blur(6px);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.navbar .logo {
+    font-size: 28px;
+    font-weight: 700;
+    color: #96c27c;
+    text-shadow: 0 0 6px #2a4c27;
+}
+
+.navbar nav a {
+    margin-left: 25px;
+    text-decoration: none;
+    color: #cfe8c7;
+    font-size: 18px;
+    transition: 0.3s;
+}
+
+.navbar nav a:hover {
+    color: #9cd68a;
+}
+
+/* PAGE SECTIONS */
+.page {
+    display: none;
+    padding: 60px;
+    animation: fadeIn 0.6s ease;
+}
+
+.page.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* HERO SECTION */
+.hero {
+    max-width: 900px;
+    margin: auto;
+    background: rgba(15, 20, 15, 0.5);
+    padding: 40px;
+    border-radius: 16px;
+    backdrop-filter: blur(4px);
+    box-shadow: 0 0 20px rgba(0,0,0,0.4);
+}
+
+.hero h1 {
+    font-size: 46px;
+    color: #a8db99;
+    margin-bottom: 20px;
+}
+
+.hero p {
+    font-size: 20px;
+    line-height: 1.7;
+    color: #d9e6d6;
+}
+
+/* TREE LIST */
+.tree-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 25px;
+}
+
+.tree-card {
+    background: rgba(18, 25, 18, 0.55);
+    border-radius: 18px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.3s, box-shadow 0.3s;
+    position: relative;
+}
+
+.tree-card:hover {
+    transform: scale(1.03);
+    box-shadow: 0 0 25px rgba(0,0,0,0.5);
+}
+
+.tree-card img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+}
+
+.tree-card .info {
+    padding: 20px;
+}
+
+.tree-card h3 {
+    font-size: 24px;
+    color: #a7d897;
+    margin-bottom: 10px;
+}
+
+.tree-card .preview {
+    color: #d7e7d2;
+    opacity: 0.85;
+}
+
+/* TREE PAGE */
+.tree-details img.tree-big {
+    width: 100%;
+    max-width: 500px;
+    border-radius: 14px;
+    margin: 20px 0;
+    box-shadow: 0 0 20px rgba(0,0,0,0.6);
+}
+
+.tree-details h2 {
+    font-size: 40px;
+    color: #9cd991;
+}
+
+.tree-details p {
+    font-size: 18px;
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+.tree-details a {
+    display: inline-block;
+    margin-bottom: 10px;
+    color: #aee8a0;
+    transition: 0.3s;
+}
+
+.tree-details a:hover {
+    color: #c5ffb3;
+}
+
+/* BACK BUTTON */
+.back {
+    background: #2a3b2a;
+    color: #d9efd7;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.back:hover {
+    background: #3f5b3f;
+}
