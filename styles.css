@@ -96,11 +96,10 @@ body.weather-rain::before {
     from { opacity: 0; transform: translateY(10px); }
     to { opacity: 1; transform: translateY(0); }
 }
-
-/* HERO SECTION */
-.hero {
+/* MAIN ARTICLES */
+.section-block {
     max-width: 900px;
-    margin: auto;
+    margin: 40px auto; /* spacing between sections */
     background: rgba(15, 20, 15, 0.5);
     padding: 40px;
     border-radius: 16px;
@@ -108,36 +107,13 @@ body.weather-rain::before {
     box-shadow: 0 0 20px rgba(0,0,0,0.4);
 }
 
-.hero h1 {
+.section-block h1 {
     font-size: 46px;
     color: #a8db99;
     margin-bottom: 20px;
 }
 
-.hero p {
-    font-size: 20px;
-    line-height: 1.7;
-    color: #d9e6d6;
-}
-
-/* FLORA SECTION */
-.flora {
-    max-width: 900px;
-    margin: auto;
-    background: rgba(15, 20, 15, 0.5);
-    padding: 40px;
-    border-radius: 16px;
-    backdrop-filter: blur(4px);
-    box-shadow: 0 0 20px rgba(0,0,0,0.4);
-}
-
-.flora h1 {
-    font-size: 46px;
-    color: #a8db99;
-    margin-bottom: 20px;
-}
-
-.flora p {
+.section-block p {
     font-size: 20px;
     line-height: 1.7;
     color: #d9e6d6;
