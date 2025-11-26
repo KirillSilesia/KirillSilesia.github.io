@@ -40,34 +40,33 @@ body.weather-fog {
 }
 
 /* Rain effect */
-/* UNIVERSAL RAIN — WORKS THE SAME IN ALL BROWSERS */
 body.weather-rain::before {
     content: "";
     position: fixed;
     inset: 0;
     pointer-events: none;
-    opacity: 0.25;
 
-    /* A rain "texture" made of many short streaks */
-    background-image:
-        radial-gradient(1px 6px at 10% 20%, rgba(255,255,255,0.2) 60%, transparent 100%),
-        radial-gradient(1px 8px at 30% 80%, rgba(255,255,255,0.22) 60%, transparent 100%),
-        radial-gradient(1px 7px at 55% 10%, rgba(255,255,255,0.18) 60%, transparent 100%),
-        radial-gradient(1px 6px at 75% 50%, rgba(255,255,255,0.25) 60%, transparent 100%),
-        radial-gradient(1px 8px at 90% 70%, rgba(255,255,255,0.20) 60%, transparent 100%),
+    /* Slight transparency */
+    opacity: 0.3;
 
-        radial-gradient(1px 7px at 15% 60%, rgba(255,255,255,0.18) 60%, transparent 100%),
-        radial-gradient(1px 6px at 45% 40%, rgba(255,255,255,0.23) 60%, transparent 100%),
-        radial-gradient(1px 8px at 65% 90%, rgba(255,255,255,0.2) 60%, transparent 100%),
-        radial-gradient(1px 7px at 85% 30%, rgba(255,255,255,0.22) 60%, transparent 100%);
+    /* Create slanted raindrop streaks */
+    background: repeating-linear-gradient(
+        115deg,
+        rgba(255,255,255,0.25) 0px,
+        rgba(255,255,255,0.25) 2px,
+        transparent 2px,
+        transparent 12px
+    );
 
-    background-size: 100% 100%;
-    animation: rainFall 0.45s linear infinite;
+    /* Size large so animation is smooth */
+    background-size: 200% 200%;
+
+    animation: rainFall 0.35s linear infinite;
 }
 
 @keyframes rainFall {
-    from { transform: translateY(-10px) translateX(-3px); }
-    to   { transform: translateY(10px)  translateX(3px); }
+    from { background-position: 0% 0%; }
+    to   { background-position: -20% 100%; }
 }
 
 /* Snow effect */
