@@ -17,124 +17,6 @@ body {
     overflow-x: hidden;
 }
 
-/* Weather Backgrounds */
-body.weather-sunny {
-    background: linear-gradient(180deg, #1a331d, #0c0f0c);
-}
-
-body.weather-cloudy {
-    background: linear-gradient(180deg, #2f3b35, #111311);
-    filter: brightness(0.9);
-}
-
-body.weather-rain {
-    background: linear-gradient(180deg, #1c2422, #090b0a);
-}
-
-body.weather-snow {
-    background: linear-gradient(180deg, #1b2a1e, #0b0f0c);
-}
-
-body.weather-fog {
-    background: linear-gradient(180deg, #1a1f1a, #0a0d0a);
-}
-
-body.weather-rain::before {
-    background-image:
-        linear-gradient(to bottom, rgba(255,255,255,0.5) 0%, rgba(255,255,255,0.5) 2px, transparent 2px),
-        linear-gradient(to bottom, rgba(255,255,255,0.35) 0%, rgba(255,255,255,0.35) 1.5px, transparent 1.5px),
-        linear-gradient(to bottom, rgba(255,255,255,0.25) 0%, rgba(255,255,255,0.25) 1px, transparent 1px);
-    background-size:
-        5px 100px,
-        3px 150px,
-        2px 120px;
-    background-repeat: repeat-x;
-    animation:
-        rain1 0.5s linear infinite,
-        rain2 0.7s linear infinite,
-        rain3 1s linear infinite;
-    opacity: 0.7;
-}
-
-@keyframes rain1 { from { background-position: 0 -100px; } to { background-position: 0 100vh; } }
-@keyframes rain2 { from { background-position: 0 -150px; } to { background-position: 0 100vh; } }
-@keyframes rain3 { from { background-position: 0 -120px; } to { background-position: 0 100vh; } }
-
-/* Snow effect */
-body.weather-snow::before {
-    content: "";
-    position: fixed;
-    inset: 0;
-    pointer-events: none;
-    opacity: 0.9;
-
-    background:
-        /* Layer 1 — small, dense snow */
-        radial-gradient(2px 2px at 10% 20%, rgba(255,255,255,0.9) 70%, transparent 100%),
-        radial-gradient(2px 2px at 40% 70%, rgba(255,255,255,0.85) 70%, transparent 100%),
-        radial-gradient(2px 2px at 70% 30%, rgba(255,255,255,0.8) 70%, transparent 100%),
-        radial-gradient(2px 2px at 85% 60%, rgba(255,255,255,0.75) 70%, transparent 100%),
-
-        /* Layer 2 — medium snow */
-        radial-gradient(3px 3px at 20% 80%, rgba(255,255,255,0.8) 70%, transparent 100%),
-        radial-gradient(3px 3px at 55% 10%, rgba(255,255,255,0.85) 70%, transparent 100%),
-        radial-gradient(3px 3px at 75% 50%, rgba(255,255,255,0.9) 70%, transparent 100%),
-
-        /* Layer 3 — big flakes (foreground) */
-        radial-gradient(4px 4px at 30% 40%, rgba(255,255,255,0.95) 70%, transparent 100%),
-        radial-gradient(4px 4px at 60% 75%, rgba(255,255,255,0.95) 70%, transparent 100%);
-
-    background-repeat: repeat;
-    background-size: 100% 100%;
-    
-    animation:
-        snowFallSmall 7s linear infinite,
-        snowFallMedium 10s linear infinite,
-        snowFallLarge 14s linear infinite;
-}
-
-/* Small flakes — fastest */
-@keyframes snowFallSmall {
-    from { transform: translateY(-100px) translateX(0); }
-    to   { transform: translateY(100px) translateX(8px); }
-}
-
-/* Medium flakes — moderate */
-@keyframes snowFallMedium {
-    from { transform: translateY(-100px) translateX(0); }
-    to   { transform: translateY(100px) translateX(15px); }
-}
-
-/* Large flakes — slow & floaty */
-@keyframes snowFallLarge {
-    from { transform: translateY(-100px) translateX(0); }
-    to   { transform: translateY(100px) translateX(25px); }
-}
-
-/* Fog effect */
-body.weather-fog::before {
-    content: "";
-    position: fixed;
-    inset: 0;
-    pointer-events: none;
-
-    background: radial-gradient(circle at 50% 50%,
-        rgba(200, 220, 200, 0.12) 0%,
-        rgba(150, 170, 150, 0.10) 25%,
-        rgba(110, 130, 110, 0.08) 60%,
-        rgba(50, 60, 50, 0.04) 100%
-    );
-
-    filter: blur(10px);
-    animation: fogShift 12s ease-in-out infinite alternate;
-    opacity: 0.5;
-}
-
-@keyframes fogShift {
-    from { transform: translateX(-20px); }
-    to   { transform: translateX(25px); }
-}
-
 /* NAVIGATION */
 .navbar {
     width: 100%;
@@ -167,6 +49,104 @@ body.weather-fog::before {
 .navbar nav a:hover {
     color: #9cd68a;
 }
+
+/* Weather */
+/* Weather Overlay Container */
+.weather-animation {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none; /* Let clicks through */
+    z-index: 50; /* below navbar but above background */
+}
+
+/* Rain */
+.rain {
+    background: transparent;
+    pointer-events: none;
+}
+.rain .drop {
+    position: absolute;
+    bottom: 100%;
+    width: 2px;
+    height: 15px;
+    background: rgba(255, 255, 255, 0.15);
+    animation: fall linear infinite;
+    border-radius: 50%;
+}
+@keyframes fall {
+    to {
+        transform: translateY(100vh);
+    }
+}
+
+/* Snow */
+.snowflake {
+    position: absolute;
+    top: -10px;
+    width: 8px;
+    height: 8px;
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 50%;
+    filter: drop-shadow(0 0 2px rgba(255,255,255,0.8));
+    animation: snowFall linear infinite;
+}
+@keyframes snowFall {
+    0% {
+        transform: translateY(0) translateX(0);
+    }
+    100% {
+        transform: translateY(100vh) translateX(30px);
+    }
+}
+
+/* Sunny background with subtle glow */
+.sunny {
+    position: fixed;
+    top: 40px;
+    right: 40px;
+    width: 100px;
+    height: 100px;
+    background: radial-gradient(circle at center, #f9e79f, #f39c12);
+    border-radius: 50%;
+    box-shadow: 0 0 30px 10px #f9e79f;
+    animation: sunnyGlow 3s ease-in-out infinite alternate;
+}
+@keyframes sunnyGlow {
+    0% {
+        box-shadow: 0 0 20px 5px #f9e79f;
+    }
+    100% {
+        box-shadow: 0 0 40px 15px #f9e79f;
+    }
+}
+
+/* Fog */
+.fog {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%;
+    height: 100%;
+    background: repeating-linear-gradient(
+        45deg,
+        rgba(255,255,255,0.05),
+        rgba(255,255,255,0.05) 10px,
+        rgba(255,255,255,0.1) 20px
+    );
+    animation: fogMove 20s linear infinite;
+    z-index: 40;
+}
+@keyframes fogMove {
+    0% {
+        background-position: 0 0;
+    }
+    100% {
+        background-position: 100px 100px;
+    }
+}
+
 
 /* PAGE SECTIONS */
 .page {

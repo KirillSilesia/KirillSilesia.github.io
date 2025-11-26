@@ -196,24 +196,52 @@
         }
 
 
-        async function applyWeatherBackground() {
-            if (!navigator.geolocation) return;
-            navigator.geolocation.getCurrentPosition(async pos => {
-                const lat = pos.coords.latitude;
-                const lon = pos.coords.longitude;
-                const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true`;
-                const r = await fetch(url);
-                const data = await r.json();
-                const code = data.current_weather.weathercode;
+        const weatherAnimationContainer = document.createElement('div');
+        weatherAnimationContainer.className = 'weather-animation';
+        document.body.appendChild(weatherAnimationContainer);
 
-                const body = document.body;
-                if (code < 3) body.classList.add('weather-sunny');
-                else if (code < 60) body.classList.add('weather-cloudy');
-                else body.classList.add('weather-rain');
-            });
+        function clearAnimations() {
+            weatherAnimationContainer.innerHTML = '';
         }
 
-        applyWeatherBackground();
+        function showRain() {
+            clearAnimations();
+            for(let i=0; i<100; i++) {
+                let drop = document.createElement('div');
+                drop.className = 'drop';
+                drop.style.left = `${Math.random()*100}vw`;
+                drop.style.animationDuration = `${0.5 + Math.random()}s`;
+                drop.style.animationDelay = `${Math.random()}s`;
+                weatherAnimationContainer.appendChild(drop);
+            }
+        }
+
+        function showSnow() {
+            clearAnimations();
+            for(let i=0; i<60; i++) {
+                let snowflake = document.createElement('div');
+                snowflake.className = 'snowflake';
+                snowflake.style.left = `${Math.random()*100}vw`;
+                snowflake.style.animationDuration = `${5 + Math.random()*5}s`;
+                snowflake.style.animationDelay = `${Math.random()*10}s`;
+                weatherAnimationContainer.appendChild(snowflake);
+            }
+        }
+
+        function showSunny() {
+            clearAnimations();
+            let sun = document.createElement('div');
+            sun.className = 'sunny';
+            weatherAnimationContainer.appendChild(sun);
+        }
+
+        function showFog() {
+            clearAnimations();
+            let fog = document.createElement('div');
+            fog.className = 'fog';
+            weatherAnimationContainer.appendChild(fog);
+        }
+
     </script>
     <script>
         const readButtons = document.querySelectorAll(".read-more");
