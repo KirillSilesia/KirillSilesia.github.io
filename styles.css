@@ -39,30 +39,58 @@ body.weather-fog {
     background: linear-gradient(180deg, #1a1f1a, #0a0d0a);
 }
 
-/* Rain effect */
 body.weather-rain::before {
     content: "";
     position: fixed;
     inset: 0;
     pointer-events: none;
+    opacity: 0.45;
 
-    /* Slight transparency */
-    opacity: 0.3;
+    /* 3 layers for depth */
+    background:
+        linear-gradient(115deg,
+            rgba(255,255,255,0.35) 0px,
+            rgba(255,255,255,0.35) 2px,
+            transparent 2px
+        ),
+        linear-gradient(115deg,
+            rgba(255,255,255,0.25) 0px,
+            rgba(255,255,255,0.25) 1px,
+            transparent 1px
+        ),
+        linear-gradient(115deg,
+            rgba(255,255,255,0.15) 0px,
+            rgba(255,255,255,0.15) 1px,
+            transparent 1px
+        );
 
-    /* Create slanted raindrop streaks */
-    background: repeating-linear-gradient(
-        115deg,
-        rgba(255,255,255,0.25) 0px,
-        rgba(255,255,255,0.25) 2px,
-        transparent 2px,
-        transparent 12px
-    );
+    /* Each layer uses different density */
+    background-size:
+        4px 150px,
+        3px 120px,
+        2px 100px;
 
-    /* Size large so animation is smooth */
-    background-size: 200% 200%;
-
-    animation: rainFall 0.35s linear infinite;
+    animation:
+        rain1 0.5s linear infinite,
+        rain2 0.7s linear infinite,
+        rain3 1s linear infinite;
 }
+
+@keyframes rain1 {
+    from { background-position: 0 0; }
+    to   { background-position: -10px 100vh; }
+}
+
+@keyframes rain2 {
+    from { background-position: 0 0; }
+    to   { background-position: -5px 100vh; }
+}
+
+@keyframes rain3 {
+    from { background-position: 0 0; }
+    to   { background-position: -2px 100vh; }
+}
+
 
 @keyframes rainFall {
     from { background-position: 0% 0%; }
