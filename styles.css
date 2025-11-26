@@ -96,25 +96,50 @@ body.weather-snow::before {
     position: fixed;
     inset: 0;
     pointer-events: none;
+    opacity: 0.9;
 
-    /* scattered snowflakes */
     background:
-        radial-gradient(2px 2px at 10% 20%, rgba(255,255,255,0.9), transparent),
-        radial-gradient(2px 2px at 40% 70%, rgba(255,255,255,0.85), transparent),
-        radial-gradient(3px 3px at 70% 30%, rgba(255,255,255,0.8), transparent),
-        radial-gradient(2px 2px at 85% 60%, rgba(255,255,255,0.9), transparent),
-        radial-gradient(3px 3px at 20% 80%, rgba(255,255,255,0.75), transparent),
-        radial-gradient(2px 2px at 55% 10%, rgba(255,255,255,0.85), transparent);
+        /* Layer 1 — small, dense snow */
+        radial-gradient(2px 2px at 10% 20%, rgba(255,255,255,0.9) 70%, transparent 100%),
+        radial-gradient(2px 2px at 40% 70%, rgba(255,255,255,0.85) 70%, transparent 100%),
+        radial-gradient(2px 2px at 70% 30%, rgba(255,255,255,0.8) 70%, transparent 100%),
+        radial-gradient(2px 2px at 85% 60%, rgba(255,255,255,0.75) 70%, transparent 100%),
 
-    opacity: 0.6;
-    animation: snowFall 8s linear infinite;
+        /* Layer 2 — medium snow */
+        radial-gradient(3px 3px at 20% 80%, rgba(255,255,255,0.8) 70%, transparent 100%),
+        radial-gradient(3px 3px at 55% 10%, rgba(255,255,255,0.85) 70%, transparent 100%),
+        radial-gradient(3px 3px at 75% 50%, rgba(255,255,255,0.9) 70%, transparent 100%),
+
+        /* Layer 3 — big flakes (foreground) */
+        radial-gradient(4px 4px at 30% 40%, rgba(255,255,255,0.95) 70%, transparent 100%),
+        radial-gradient(4px 4px at 60% 75%, rgba(255,255,255,0.95) 70%, transparent 100%);
+
+    background-repeat: repeat;
+    background-size: 100% 100%;
+    
+    animation:
+        snowFallSmall 7s linear infinite,
+        snowFallMedium 10s linear infinite,
+        snowFallLarge 14s linear infinite;
 }
 
-@keyframes snowFall {
-    0% { transform: translateY(-20px); }
-    100% { transform: translateY(60px); }
+/* Small flakes — fastest */
+@keyframes snowFallSmall {
+    from { transform: translateY(-100px) translateX(0); }
+    to   { transform: translateY(100px) translateX(8px); }
 }
 
+/* Medium flakes — moderate */
+@keyframes snowFallMedium {
+    from { transform: translateY(-100px) translateX(0); }
+    to   { transform: translateY(100px) translateX(15px); }
+}
+
+/* Large flakes — slow & floaty */
+@keyframes snowFallLarge {
+    from { transform: translateY(-100px) translateX(0); }
+    to   { transform: translateY(100px) translateX(25px); }
+}
 
 /* Fog effect */
 body.weather-fog::before {
