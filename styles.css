@@ -48,7 +48,7 @@ body.weather-rain::before {
     height: 100%;
     pointer-events: none;
 
-    background-image:
+    background:
         linear-gradient(120deg,
         rgba(255,255,255,0.12) 0%,
         rgba(255,255,255,0.04) 60%,
@@ -72,7 +72,7 @@ body.weather-snow::before {
     pointer-events: none;
 
     /* scattered snowflakes */
-    background-image:
+    background:
         radial-gradient(2px 2px at 10% 20%, rgba(255,255,255,0.9), transparent),
         radial-gradient(2px 2px at 40% 70%, rgba(255,255,255,0.85), transparent),
         radial-gradient(3px 3px at 70% 30%, rgba(255,255,255,0.8), transparent),
