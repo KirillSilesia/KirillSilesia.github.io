@@ -44,31 +44,22 @@ body.weather-rain::before {
     position: fixed;
     inset: 0;
     pointer-events: none;
-    opacity: 0.45;
+    opacity: 0.5;
 
-    /* 3 layers for depth */
-    background:
-        linear-gradient(115deg,
-            rgba(255,255,255,0.35) 0px,
-            rgba(255,255,255,0.35) 2px,
-            transparent 2px
-        ),
-        linear-gradient(115deg,
-            rgba(255,255,255,0.25) 0px,
-            rgba(255,255,255,0.25) 1px,
-            transparent 1px
-        ),
-        linear-gradient(115deg,
-            rgba(255,255,255,0.15) 0px,
-            rgba(255,255,255,0.15) 1px,
-            transparent 1px
-        );
+    /* Layered rain streaks */
+    background-image:
+        linear-gradient(to bottom, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0.3) 2px, transparent 2px),
+        linear-gradient(to bottom, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0.2) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0.15) 1px, transparent 1px);
 
-    /* Each layer uses different density */
+    /* Width of streaks and height (height = streak length) */
     background-size:
-        4px 150px,
-        3px 120px,
-        2px 100px;
+        3px 100px,
+        2px 150px,
+        1px 120px;
+
+    /* Repeat horizontally and vertically */
+    background-repeat: repeat;
 
     animation:
         rain1 0.5s linear infinite,
@@ -77,25 +68,18 @@ body.weather-rain::before {
 }
 
 @keyframes rain1 {
-    from { background-position: 0 0; }
-    to   { background-position: -10px 100vh; }
+    from { background-position: 0 -100px; }
+    to   { background-position: 0 100vh; }
 }
-
 @keyframes rain2 {
-    from { background-position: 0 0; }
-    to   { background-position: -5px 100vh; }
+    from { background-position: 0 -150px; }
+    to   { background-position: 0 100vh; }
 }
-
 @keyframes rain3 {
-    from { background-position: 0 0; }
-    to   { background-position: -2px 100vh; }
+    from { background-position: 0 -120px; }
+    to   { background-position: 0 100vh; }
 }
 
-
-@keyframes rainFall {
-    from { background-position: 0% 0%; }
-    to   { background-position: -20% 100%; }
-}
 
 /* Snow effect */
 body.weather-snow::before {
