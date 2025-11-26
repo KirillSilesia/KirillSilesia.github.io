@@ -68,18 +68,19 @@ body {
     pointer-events: none;
 }
 .rain .drop {
-    position: absolute;
-    bottom: 100%;
-    width: 2px;
-    height: 15px;
-    background: rgba(255, 255, 255, 0.15);
-    animation: fall linear infinite;
-    border-radius: 50%;
+  position: absolute;
+  bottom: 100%;
+  width: 2px;             /* narrow */
+  height: 15px;           /* tall */
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 50%;
+  transform: rotate(15deg); /* tilt for realism */
+  animation: fall linear infinite;
 }
 @keyframes fall {
-    to {
-        transform: translateY(100vh);
-    }
+  to {
+    transform: translateY(100vh) rotate(15deg);
+  }
 }
 
 /* Snow */
