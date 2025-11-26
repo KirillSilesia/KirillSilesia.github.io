@@ -40,22 +40,25 @@ body.weather-fog {
 }
 
 body.weather-rain::before {
+    background-image:
+        linear-gradient(to bottom, rgba(255,255,255,0.5) 0%, rgba(255,255,255,0.5) 2px, transparent 2px),
+        linear-gradient(to bottom, rgba(255,255,255,0.35) 0%, rgba(255,255,255,0.35) 1.5px, transparent 1.5px),
+        linear-gradient(to bottom, rgba(255,255,255,0.25) 0%, rgba(255,255,255,0.25) 1px, transparent 1px);
     background-size:
-        3px 100vh,
-        2px 100vh,
-        1px 100vh;
+        5px 100px,
+        3px 150px,
+        2px 120px;
     background-repeat: repeat-x;
     animation:
         rain1 0.5s linear infinite,
         rain2 0.7s linear infinite,
         rain3 1s linear infinite;
+    opacity: 0.7;
 }
 
-/* Animation stays the same */
-@keyframes rain1 { from { background-position: 0 -100vh; } to { background-position: 0 100vh; } }
-@keyframes rain2 { from { background-position: 0 -100vh; } to { background-position: 0 100vh; } }
-@keyframes rain3 { from { background-position: 0 -100vh; } to { background-position: 0 100vh; } }
-
+@keyframes rain1 { from { background-position: 0 -100px; } to { background-position: 0 100vh; } }
+@keyframes rain2 { from { background-position: 0 -150px; } to { background-position: 0 100vh; } }
+@keyframes rain3 { from { background-position: 0 -120px; } to { background-position: 0 100vh; } }
 
 /* Snow effect */
 body.weather-snow::before {
