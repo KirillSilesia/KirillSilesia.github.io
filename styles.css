@@ -275,6 +275,14 @@ body {
 .fauna-details p { font-size: 18px; line-height: 1.6; margin: 15px auto; max-width: 700px; text-align: center; }
 .fauna-details a { display: inline-block; margin: 10px auto; color: #aee8a0; transition: 0.3s; text-align: center; }
 .fauna-details a:hover { color: #c5ffb3; }
+.fauna-details img.animal-big {
+    width: 100%;
+    max-width: 400px; /* or 350px if you want smaller */
+    border-radius: 14px;
+    margin: 20px 0;
+    box-shadow: 0 0 20px rgba(0,0,0,0.6);
+}
+
 
 /* BACK BUTTON */
 .back {
