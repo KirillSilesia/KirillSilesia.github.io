@@ -17,37 +17,6 @@ body {
     overflow-x: hidden;
 }
 
-/* Weather Backgrounds */
-body.weather-sunny {
-    background: linear-gradient(180deg, #1a331d, #0c0f0c);
-}
-
-body.weather-cloudy {
-    background: linear-gradient(180deg, #2f3b35, #111311);
-    filter: brightness(0.9);
-}
-
-body.weather-rain {
-    background: linear-gradient(180deg, #1c2422, #090b0a);
-}
-
-/* Rain effect (only visible when rainy) */
-body.weather-rain::before {
-    content: "";
-    position: fixed;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    pointer-events: none;
-    background-image: url('https://i.imgur.com/NM5Y7UO.png');
-    opacity: 0.25;
-    animation: rainMove 0.4s linear infinite;
-}
-
-@keyframes rainMove {
-    from { background-position: 0 0; }
-    to { background-position: 10% 100%; }
-}
-
 /* NAVIGATION */
 .navbar {
     width: 100%;
@@ -80,6 +49,105 @@ body.weather-rain::before {
 .navbar nav a:hover {
     color: #9cd68a;
 }
+
+/* Weather */
+/* Weather Overlay Container */
+.weather-animation {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none; /* Let clicks through */
+    z-index: 50; /* below navbar but above background */
+}
+
+/* Rain */
+.rain {
+    background: transparent;
+    pointer-events: none;
+}
+.rain .drop {
+  position: absolute;
+  bottom: 100%;
+  width: 2px;             /* narrow */
+  height: 15px;           /* tall */
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 50%;
+  transform: rotate(15deg); /* tilt for realism */
+  animation: fall linear infinite;
+}
+@keyframes fall {
+  to {
+    transform: translateY(100vh) rotate(15deg);
+  }
+}
+
+/* Snow */
+.snowflake {
+    position: absolute;
+    top: -10px;
+    width: 8px;
+    height: 8px;
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 50%;
+    filter: drop-shadow(0 0 2px rgba(255,255,255,0.8));
+    animation: snowFall linear infinite;
+}
+@keyframes snowFall {
+    0% {
+        transform: translateY(0) translateX(0);
+    }
+    100% {
+        transform: translateY(100vh) translateX(30px);
+    }
+}
+
+/* Sunny background with subtle glow */
+.sunny {
+    position: fixed;
+    top: 40px;
+    right: 40px;
+    width: 100px;
+    height: 100px;
+    background: radial-gradient(circle at center, #f9e79f, #f39c12);
+    border-radius: 50%;
+    box-shadow: 0 0 30px 10px #f9e79f;
+    animation: sunnyGlow 3s ease-in-out infinite alternate;
+}
+@keyframes sunnyGlow {
+    0% {
+        box-shadow: 0 0 20px 5px #f9e79f;
+    }
+    100% {
+        box-shadow: 0 0 40px 15px #f9e79f;
+    }
+}
+
+/* Fog */
+.fog {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%;
+    height: 100%;
+    background: repeating-linear-gradient(
+        45deg,
+        rgba(255,255,255,0.05),
+        rgba(255,255,255,0.05) 10px,
+        rgba(255,255,255,0.1) 20px
+    );
+    animation: fogMove 20s linear infinite;
+    z-index: 40;
+}
+@keyframes fogMove {
+    0% {
+        background-position: 0 0;
+    }
+    100% {
+        background-position: 100px 100px;
+    }
+}
+
 
 /* PAGE SECTIONS */
 .page {
