@@ -1,5 +1,4 @@
 /* Dark Forest Theme CSS for Leafora */
-
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
 
 * {
@@ -50,37 +49,30 @@ body {
     color: #9cd68a;
 }
 
-/* Weather */
-/* Weather Overlay Container */
+/* Weather Animations */
 .weather-animation {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    pointer-events: none; /* Let clicks through */
-    z-index: 50; /* below navbar but above background */
+    pointer-events: none;
+    z-index: 50;
 }
 
 /* Rain */
-.rain {
-    background: transparent;
-    pointer-events: none;
-}
 .rain .drop {
-  position: absolute;
-  bottom: 100%;
-  width: 2px;             /* narrow */
-  height: 15px;           /* tall */
-  background: rgba(255, 255, 255, 0.15);
-  border-radius: 50%;
-  transform: rotate(15deg); /* tilt for realism */
-  animation: fall linear infinite;
+    position: absolute;
+    bottom: 100%;
+    width: 2px;
+    height: 15px;
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 50%;
+    transform: rotate(15deg);
+    animation: fall linear infinite;
 }
 @keyframes fall {
-  to {
-    transform: translateY(100vh) rotate(15deg);
-  }
+  to { transform: translateY(100vh) rotate(15deg); }
 }
 
 /* Snow */
@@ -95,15 +87,11 @@ body {
     animation: snowFall linear infinite;
 }
 @keyframes snowFall {
-    0% {
-        transform: translateY(0) translateX(0);
-    }
-    100% {
-        transform: translateY(100vh) translateX(30px);
-    }
+    0% { transform: translateY(0) translateX(0); }
+    100% { transform: translateY(100vh) translateX(30px); }
 }
 
-/* Sunny background with subtle glow */
+/* Sunny */
 .sunny {
     position: fixed;
     top: 40px;
@@ -116,12 +104,8 @@ body {
     animation: sunnyGlow 3s ease-in-out infinite alternate;
 }
 @keyframes sunnyGlow {
-    0% {
-        box-shadow: 0 0 20px 5px #f9e79f;
-    }
-    100% {
-        box-shadow: 0 0 40px 15px #f9e79f;
-    }
+    0% { box-shadow: 0 0 20px 5px #f9e79f; }
+    100% { box-shadow: 0 0 40px 15px #f9e79f; }
 }
 
 /* Fog */
@@ -140,14 +124,9 @@ body {
     z-index: 40;
 }
 @keyframes fogMove {
-    0% {
-        background-position: 0 0;
-    }
-    100% {
-        background-position: 100px 100px;
-    }
+    0% { background-position: 0 0; }
+    100% { background-position: 100px 100px; }
 }
-
 
 /* PAGE SECTIONS */
 .page {
@@ -164,8 +143,8 @@ body {
     from { opacity: 0; transform: translateY(10px); }
     to { opacity: 1; transform: translateY(0); }
 }
+
 /* MAIN ARTICLES */
-/* Section blocks */
 .section-block {
     max-width: 900px;
     margin: 40px auto;
@@ -179,7 +158,6 @@ body {
     overflow: hidden;
 }
 
-/* Heading and paragraph */
 .section-block h1 {
     font-size: 46px;
     color: #a8db99;
@@ -192,21 +170,17 @@ body {
     color: #d9e6d6;
 }
 
-/* Hide full content by default */
+/* Read More */
 .full-content {
     max-height: 0;
     overflow: hidden;
     transition: max-height 0.5s ease, opacity 0.5s ease;
     opacity: 0;
 }
-
-/* Expand when section has 'expanded' class */
 .section-block.expanded .full-content {
-    max-height: 1000px; /* enough to fit any text */
+    max-height: 1000px;
     opacity: 1;
 }
-
-/* Read More button */
 .read-more {
     display: inline-block;
     margin-top: 20px;
@@ -220,21 +194,8 @@ body {
     cursor: pointer;
     transition: background 0.3s, transform 0.2s;
 }
-
-.read-more:hover {
-    background: #3f5b3f;
-    transform: scale(1.05);
-}
-
-.read-more:focus {
-    outline: none;
-}
-
-/* Optional: small animation for smooth text reveal */
-.section-block .full-content p {
-    margin: 0;
-    padding-top: 10px;
-}
+.read-more:hover { background: #3f5b3f; transform: scale(1.05); }
+.read-more:focus { outline: none; }
 
 /* TREE LIST */
 .tree-list {
@@ -242,7 +203,6 @@ body {
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap: 25px;
 }
-
 .tree-card {
     background: rgba(18, 25, 18, 0.55);
     border-radius: 18px;
@@ -251,63 +211,70 @@ body {
     transition: transform 0.3s, box-shadow 0.3s;
     position: relative;
 }
-
 .tree-card:hover {
     transform: scale(1.03);
     box-shadow: 0 0 25px rgba(0,0,0,0.5);
 }
-
-.tree-card img {
-    width: 100%;
-    height: 180px;
-    object-fit: cover;
-}
-
-.tree-card .info {
-    padding: 20px;
-}
-
-.tree-card h3 {
-    font-size: 24px;
-    color: #a7d897;
-    margin-bottom: 10px;
-}
-
-.tree-card .preview {
-    color: #d7e7d2;
-    opacity: 0.85;
-}
+.tree-card img { width: 100%; height: 180px; object-fit: cover; }
+.tree-card .info { padding: 20px; }
+.tree-card h3 { font-size: 24px; color: #a7d897; margin-bottom: 10px; }
+.tree-card .preview { color: #d7e7d2; opacity: 0.85; }
 
 /* TREE PAGE */
 .tree-details img.tree-big {
     width: 100%;
     max-width: 500px;
     border-radius: 14px;
-    margin: 20px 0;
+    margin: 20px auto;
+    display: block;
     box-shadow: 0 0 20px rgba(0,0,0,0.6);
 }
+.tree-details h2 { font-size: 40px; color: #9cd991; }
+.tree-details p { font-size: 18px; line-height: 1.6; margin-bottom: 20px; }
+.tree-details a { display: inline-block; margin-bottom: 10px; color: #aee8a0; transition: 0.3s; }
+.tree-details a:hover { color: #c5ffb3; }
 
-.tree-details h2 {
-    font-size: 40px;
-    color: #9cd991;
+/* FAUNA LIST */
+.animals-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 25px;
 }
+.animals-card {
+    background: rgba(18, 25, 18, 0.55);
+    border-radius: 18px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.3s, box-shadow 0.3s;
+    position: relative;
+}
+.animals-card:hover {
+    transform: scale(1.03);
+    box-shadow: 0 0 25px rgba(0,0,0,0.5);
+}
+.animals-card img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 12px;
+}
+.animals-card h3 { font-size: 24px; color: #a7d897; margin: 15px; }
+.animals-card .preview { color: #d7e7d2; margin: 0 15px 15px 15px; opacity: 0.85; }
 
-.tree-details p {
-    font-size: 18px;
-    line-height: 1.6;
-    margin-bottom: 20px;
+/* ANIMAL DETAIL PAGE */
+.fauna-details img.animal-big {
+    max-width: 350px; /* limit big image */
+    width: 100%;
+    height: auto;
+    display: block;
+    margin: 20px auto;
+    border-radius: 12px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.6);
 }
-
-.tree-details a {
-    display: inline-block;
-    margin-bottom: 10px;
-    color: #aee8a0;
-    transition: 0.3s;
-}
-
-.tree-details a:hover {
-    color: #c5ffb3;
-}
+.fauna-details h2 { font-size: 36px; color: #9cd991; text-align: center; margin-top: 10px; }
+.fauna-details p { font-size: 18px; line-height: 1.6; margin: 15px auto; max-width: 700px; text-align: center; }
+.fauna-details a { display: inline-block; margin: 10px auto; color: #aee8a0; transition: 0.3s; text-align: center; }
+.fauna-details a:hover { color: #c5ffb3; }
 
 /* BACK BUTTON */
 .back {
@@ -320,7 +287,4 @@ body {
     cursor: pointer;
     transition: 0.3s;
 }
-
-.back:hover {
-    background: #3f5b3f;
-}
+.back:hover { background: #3f5b3f; }
