@@ -237,9 +237,10 @@ body {
 /* FAUNA LIST */
 .animals-list {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap: 25px;
 }
+
 .animals-card {
     background: rgba(18, 25, 18, 0.55);
     border-radius: 18px;
@@ -248,18 +249,33 @@ body {
     transition: transform 0.3s, box-shadow 0.3s;
     position: relative;
 }
+
 .animals-card:hover {
     transform: scale(1.03);
     box-shadow: 0 0 25px rgba(0,0,0,0.5);
 }
+
 .animals-card img {
     width: 100%;
-    height: 180px;
-    object-fit: cover;
-    border-radius: 12px;
+    height: 180px; /* limit height */
+    object-fit: cover; /* crop to fit nicely */
 }
-.animals-card h3 { font-size: 24px; color: #a7d897; margin: 15px; }
-.animals-card .preview { color: #d7e7d2; margin: 0 15px 15px 15px; opacity: 0.85; }
+
+.animals-card .info {
+    padding: 20px;
+}
+
+.animals-card h3 {
+    font-size: 24px;
+    color: #a7d897;
+    margin-bottom: 10px;
+}
+
+.animals-card .preview {
+    color: #d7e7d2;
+    opacity: 0.85;
+}
+
 
 /* ANIMAL DETAIL PAGE */
 .fauna-details img.animal-big {
