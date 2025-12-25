@@ -15,6 +15,7 @@
         <nav>
             <a href="#home">Home</a>
             <a href="#trees">Flora</a>
+            <a href="#fauna">Fauna</a>
         </nav>
     </header>
 
@@ -119,6 +120,64 @@
 
     <section id="tree-page" class="page tree-details"></section>
 
+    <section id="Fauna" class="page">
+        <h2>Fauna of the Białowieża Forest</h2>
+        <div class="animals-list">
+    
+            <div class="animals-card" onclick="openAnimal('European Bison')">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/2/26/Bison_bonasus_%28Linnaeus_1758%29.jpg" />
+                <div class="info">
+                    <h3>European Bison</h3>
+                    <p class="preview">The European bison is the largest land animal in Europe...</p>
+                </div>
+            </div>
+    
+            <div class="animals-card" onclick="openAnimal('European Wolf')">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/b/b0/European_grey_wolf_in_Prague_zoo_2.jpg" />
+                <div class="info">
+                    <h3>European wolf</h3>
+                    <p class="preview">Wolves are apex predators...</p>
+                </div>
+            </div>
+    
+            <div class="animals-card" onclick="openAnimal('Eurasian Lynx')">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/3/3b/Lince_ib%C3%A9rico_%28Lynx_pardinus%29%2C_Almuradiel%2C_Ciudad_Real%2C_Espa%C3%B1a%2C_2021-12-19%2C_DD_07.jpg" />
+                <div class="info">
+                    <h3>Eurasian Lynx</h3>
+                    <p class="preview">The elusive Eurasian lynx...</p>
+                </div>
+            </div>
+    
+            <div class="animals-card" onclick="openAnimal('Wild Boar')">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/8/80/Wild_boar_in_San_Rossore%2C_Pisa%2C_Italy.jpg" />
+                <div class="info">
+                    <h3>Wild Boar</h3>
+                    <p class="preview">Wild boars are highly adaptable animals...</p>
+                </div>
+            </div>
+    
+            <div class="animals-card" onclick="openAnimal('Red Deer')">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/6/66/014_Wild_Red_Deer_Switzerland_Photo_by_Giles_Laurent.jpg" />
+                <div class="info">
+                    <h3>Red Deer</h3>
+                    <p class="preview">Red deer are one of the forest’s largest herbivores...</p>
+                </div>
+            </div>
+    
+            <div class="animals-card" onclick="openAnimal('Beaver')">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/American_Beaver.jpg" />
+                <div class="info">
+                    <h3>Beaver</h3>
+                    <p class="preview">Eurasian beavers shape wetland...</p>
+                </div>
+            </div>
+    
+        </div>
+    </section>
+    
+
+    <section id="flora-page" class="page flora-details"></section>
+
     <script>
         const pages = document.querySelectorAll('.page');
 
@@ -180,6 +239,56 @@
         }
     };
 
+    const animalData = {
+        bison: {
+            title: "European Bison (Bison bonasus)",
+            img: "https://upload.wikimedia.org/wikipedia/commons/2/26/Bison_bonasus_%28Linnaeus_1758%29.jpg",
+            cambridge: "https://dictionary.cambridge.org/dictionary/english/bison",
+            wiki: "https://en.wikipedia.org/wiki/European_bison",
+            text: "The European bison is the largest land animal in Europe and a conservation symbol of Białowieża Forest."
+        },
+
+        wolf: {
+            title: "European Wolf (Canis lupus lupus)",
+            img: "https://upload.wikimedia.org/wikipedia/commons/b/b0/European_grey_wolf_in_Prague_zoo_2.jpg",
+            cambridge: "https://dictionary.cambridge.org/dictionary/english/wolf",
+            wiki: "https://en.wikipedia.org/wiki/Eurasian_wolf",
+            text: "Wolves are apex predators that play a key role in maintaining the balance of forest ecosystems."
+        },
+
+        lynx: {
+            title: "Eurasian Lynx (Lynx lynx)",
+            img: "https://upload.wikimedia.org/wikipedia/commons/3/3b/Lince_ib%C3%A9rico_%28Lynx_pardinus%29%2C_Almuradiel%2C_Ciudad_Real%2C_Espa%C3%B1a%2C_2021-12-19%2C_DD_07.jpg",
+            cambridge: "https://dictionary.cambridge.org/dictionary/english/lynx",
+            wiki: "https://en.wikipedia.org/wiki/Eurasian_lynx",
+            text: "The elusive Eurasian lynx is a solitary wild cat known for its tufted ears and stealthy hunting."
+        },
+
+        wildBoar: {
+            title: "Wild Boar (Sus scrofa)",
+            img: "https://upload.wikimedia.org/wikipedia/commons/8/80/Wild_boar_in_San_Rossore%2C_Pisa%2C_Italy.jpg",
+            cambridge: "https://dictionary.cambridge.org/dictionary/english/boar",
+            wiki: "https://en.wikipedia.org/wiki/Wild_boar",
+            text: "Wild boars are highly adaptable animals that forage across the forest floor for roots and insects."
+        },
+
+        redDeer: {
+            title: "Red Deer (Cervus elaphus)",
+            img: "https://upload.wikimedia.org/wikipedia/commons/6/66/014_Wild_Red_Deer_Switzerland_Photo_by_Giles_Laurent.jpg",
+            cambridge: "https://dictionary.cambridge.org/dictionary/english/deer",
+            wiki: "https://en.wikipedia.org/wiki/Red_deer",
+            text: "Red deer are one of the forest’s largest herbivores and an important prey species for large predators."
+        },
+
+        beaver: {
+            title: "Eurasian Beaver (Castor fiber)",
+            img: "https://upload.wikimedia.org/wikipedia/commons/6/6b/American_Beaver.jpg",
+            cambridge: "https://dictionary.cambridge.org/dictionary/english/beaver",
+            wiki: "https://en.wikipedia.org/wiki/Eurasian_beaver",
+            text: "Eurasian beavers shape wetland habitats by building lodges, dams, and channels in rivers and streams."
+        }
+    };
+
 
         function openTree(key) {
             const t = treeData[key];
@@ -193,6 +302,20 @@
                 <a href="${t.wiki}" target="_blank">Wikipedia</a>
             `;
             showPage('tree-page');
+        }
+
+        function openAnimal(key) {
+            const t = animalData[key];
+            const page = document.getElementById('flora-page');
+            page.innerHTML = `
+                <button class="back" onclick="showPage('Flora')">← Back</button>
+                <h2>${t.title}</h2>
+                <img src="${t.img}" class="tree-big" />
+                <p>${t.text}</p>
+                <a href="${t.cambridge}" target="_blank">Cambridge Dictionary</a><br/>
+                <a href="${t.wiki}" target="_blank">Wikipedia</a>
+            `;
+            showPage('flora-page');
         }
 
 
